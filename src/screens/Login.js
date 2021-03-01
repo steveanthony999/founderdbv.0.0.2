@@ -3,11 +3,27 @@ import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
 
 const Login = () => {
-  const { login } = useAuth();
+  const { loginWithGoogle, loginWithFacebook, loginWithTwitter } = useAuth();
 
-  const loginWithGoogle = async () => {
+  const handleGoogleLogin = async () => {
     try {
-      await login();
+      await loginWithGoogle();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleFacebookLogin = async () => {
+    try {
+      await loginWithFacebook();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleTwitterLogin = async () => {
+    try {
+      await loginWithTwitter();
     } catch (err) {
       console.log(err);
     }
@@ -15,7 +31,9 @@ const Login = () => {
 
   return (
     <div>
-      <button onClick={loginWithGoogle}>Log in with Google</button>
+      <button onClick={handleGoogleLogin}>Log in with Google</button>
+      <button onClick={handleFacebookLogin}>Log in with Facebook</button>
+      <button onClick={handleTwitterLogin}>Log in with Twitter</button>
     </div>
   );
 };

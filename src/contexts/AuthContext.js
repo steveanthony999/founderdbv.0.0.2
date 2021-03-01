@@ -1,5 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { auth, googleProvider } from '../firebase';
+import {
+  auth,
+  googleProvider,
+  facebookProvider,
+  twitterProvider,
+} from '../firebase';
 import { useHistory } from 'react-router-dom';
 
 const AuthContext = React.createContext();
@@ -13,7 +18,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const history = useHistory();
 
-  const login = () => {
+  const loginWithGoogle = () => {
     auth
       .signInWithPopup(googleProvider)
       .then((res) => {
@@ -26,8 +31,34 @@ export const AuthProvider = ({ children }) => {
       });
   };
 
+  const loginWithFacebook = () => {
+    auth
+      .signInWithPopup(facebookProvider)
+      .then((res) => {
+        setUser(res.user);
+        setLoading(false);
+        history.push('/');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const loginWithTwitter = () => {
+    auth
+      .signInWithPopup(twitterProvider)
+      .then((res) => {
+        setUser(res.user);
+        setLoading(false);
+        history.push('/');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const logout = () => {
-    auth.signOut().then(() => {});
+    auth.signOut();
   };
 
   useEffect(() => {
@@ -41,7 +72,9 @@ export const AuthProvider = ({ children }) => {
 
   const value = {
     user,
-    login,
+    loginWithGoogle,
+    loginWithFacebook,
+    loginWithTwitter,
     logout,
   };
 
