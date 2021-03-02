@@ -17,83 +17,74 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
+
   const history = useHistory();
 
-  const signupWithEmailAndPassword = (username, email, password) => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((res) => {
-        setUser(res.user);
-      })
-      .then(() => {
-        auth.currentUser.updateProfile({
-          displayName: username,
-        });
-        setLoading(false);
-        history.push('/');
-      })
-      .then(() => {
-        window.location.reload(true);
-      })
-      .catch((err) => {
-        setError(err);
+  const signupWithEmailAndPassword = async (username, email, password) => {
+    try {
+      const res = await auth.createUserWithEmailAndPassword(email, password);
+      await setUser(res.user);
+      await auth.currentUser.updateProfile({
+        displayName: username,
       });
+      await setLoading(false);
+      await history.push('/');
+      await history.go(0);
+    } catch (err) {
+      await setError(err);
+    }
   };
 
-  const loginWithEmailAndPassword = (email, password) => {
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then((res) => {
-        setUser(res.user);
-        setLoading(false);
-        history.push('/');
-      })
-      .catch((err) => {
-        setError(err);
-      });
+  const loginWithEmailAndPassword = async (email, password) => {
+    try {
+      const res = await auth.signInWithEmailAndPassword(email, password);
+      await setUser(res.user);
+      await setLoading(false);
+      await history.push('/');
+    } catch (err) {
+      await setError(err);
+    }
   };
 
-  const loginWithGoogle = () => {
-    auth
-      .signInWithPopup(googleProvider)
-      .then((res) => {
-        setUser(res.user);
-        setLoading(false);
-        history.push('/');
-      })
-      .catch((err) => {
-        setError(err);
-      });
+  const loginWithGoogle = async () => {
+    try {
+      const res = await auth.signInWithPopup(googleProvider);
+      await setUser(res.user);
+      await setLoading(false);
+      await history.push('/');
+    } catch (err) {
+      await setError(err);
+    }
   };
 
-  const loginWithFacebook = () => {
-    auth
-      .signInWithPopup(facebookProvider)
-      .then((res) => {
-        setUser(res.user);
-        setLoading(false);
-        history.push('/');
-      })
-      .catch((err) => {
-        setError(err);
-      });
+  const loginWithFacebook = async () => {
+    try {
+      const res = await auth.signInWithPopup(facebookProvider);
+      await setUser(res.user);
+      await setLoading(false);
+      await history.push('/');
+    } catch (err) {
+      await setError(err);
+    }
   };
 
-  const loginWithTwitter = () => {
-    auth
-      .signInWithPopup(twitterProvider)
-      .then((res) => {
-        setUser(res.user);
-        setLoading(false);
-        history.push('/');
-      })
-      .catch((err) => {
-        setError(err);
-      });
+  const loginWithTwitter = async () => {
+    try {
+      const res = await auth.signInWithPopup(twitterProvider);
+      await setUser(res.user);
+      await setLoading(false);
+      await history.push('/');
+    } catch (err) {
+      await setError(err);
+    }
   };
 
-  const logout = () => {
-    auth.signOut();
+  const logout = async () => {
+    try {
+      await auth.signOut();
+    } catch (err) {
+      await setError(err);
+    }
   };
 
   useEffect(() => {

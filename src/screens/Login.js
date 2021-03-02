@@ -14,41 +14,25 @@ const Login = () => {
     error,
   } = useAuth();
 
-  const handleEmailAndPasswordLogin = async (e) => {
+  const handleEmailAndPasswordLogin = (e) => {
     e.preventDefault();
 
-    try {
-      await loginWithEmailAndPassword(
-        emailRef.current.value,
-        passwordRef.current.value
-      );
-    } catch (err) {
-      console.log(err);
-    }
+    loginWithEmailAndPassword(
+      emailRef.current.value,
+      passwordRef.current.value
+    );
   };
 
-  const handleGoogleLogin = async () => {
-    try {
-      await loginWithGoogle();
-    } catch (err) {
-      console.log(err);
-    }
+  const handleGoogleLogin = () => {
+    loginWithGoogle();
   };
 
-  const handleFacebookLogin = async () => {
-    try {
-      await loginWithFacebook();
-    } catch (err) {
-      console.log(err);
-    }
+  const handleFacebookLogin = () => {
+    loginWithFacebook();
   };
 
-  const handleTwitterLogin = async () => {
-    try {
-      await loginWithTwitter();
-    } catch (err) {
-      console.log(err);
-    }
+  const handleTwitterLogin = () => {
+    loginWithTwitter();
   };
 
   return (

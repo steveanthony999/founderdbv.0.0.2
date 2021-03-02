@@ -10,22 +10,18 @@ const Signup = () => {
 
   const { signupWithEmailAndPassword, error } = useAuth();
 
-  const handleEmailAndPasswordSignup = async (e) => {
+  const handleEmailAndPasswordSignup = (e) => {
     e.preventDefault();
 
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return console.log('pw dont match');
+      return console.log('pw dont match - create an error handler component');
     }
 
-    try {
-      await signupWithEmailAndPassword(
-        userNameRef.current.value,
-        emailRef.current.value,
-        passwordRef.current.value
-      );
-    } catch (err) {
-      console.log(err);
-    }
+    signupWithEmailAndPassword(
+      userNameRef.current.value,
+      emailRef.current.value,
+      passwordRef.current.value
+    );
   };
 
   return (
