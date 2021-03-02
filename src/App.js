@@ -10,6 +10,7 @@ import Navbar from './components/Navbar';
 // ======== Screens
 import Home from './screens/Home';
 import Login from './screens/Login';
+import Signup from './screens/Signup';
 import Founders from './screens/Founders';
 
 import './App.css';
@@ -23,6 +24,7 @@ function App() {
           <PrivateRoute exact path='/' component={Home} />
           <PrivateRoute path='/founders' component={Founders} />
           <Route path='/login' component={Login} />
+          <Route path='/signup' component={Signup} />
         </Switch>
       </AuthProvider>
     </Router>

@@ -22,11 +22,15 @@ const Navbar = () => {
           <NavLink to='/founders'>FOUNDERS</NavLink>
           {user ? (
             <>
-              <p>{user.displayName.toUpperCase()}</p>
+              <p>{user.displayName && user.displayName.toUpperCase()}</p>
               <p onClick={logoutUser}>LOG OUT</p>
             </>
           ) : (
-            <NavLink to='/login'>LOG IN</NavLink>
+            <>
+              <NavLink to='/login'>LOG IN</NavLink>
+              <p>|</p>
+              <NavLink to='/signup'>SIGN UP</NavLink>
+            </>
           )}
         </div>
       </div>

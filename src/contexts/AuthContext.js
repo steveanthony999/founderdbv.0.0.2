@@ -16,7 +16,42 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
   const history = useHistory();
+
+  const signupWithEmailAndPassword = (username, email, password) => {
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((res) => {
+        setUser(res.user);
+      })
+      .then(() => {
+        auth.currentUser.updateProfile({
+          displayName: username,
+        });
+        setLoading(false);
+        history.push('/');
+      })
+      .then(() => {
+        window.location.reload(true);
+      })
+      .catch((err) => {
+        setError(err);
+      });
+  };
+
+  const loginWithEmailAndPassword = (email, password) => {
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((res) => {
+        setUser(res.user);
+        setLoading(false);
+        history.push('/');
+      })
+      .catch((err) => {
+        setError(err);
+      });
+  };
 
   const loginWithGoogle = () => {
     auth
@@ -27,7 +62,7 @@ export const AuthProvider = ({ children }) => {
         history.push('/');
       })
       .catch((err) => {
-        console.log(err);
+        setError(err);
       });
   };
 
@@ -40,7 +75,7 @@ export const AuthProvider = ({ children }) => {
         history.push('/');
       })
       .catch((err) => {
-        console.log(err);
+        setError(err);
       });
   };
 
@@ -53,7 +88,7 @@ export const AuthProvider = ({ children }) => {
         history.push('/');
       })
       .catch((err) => {
-        console.log(err);
+        setError(err);
       });
   };
 
@@ -72,6 +107,9 @@ export const AuthProvider = ({ children }) => {
 
   const value = {
     user,
+    error,
+    signupWithEmailAndPassword,
+    loginWithEmailAndPassword,
     loginWithGoogle,
     loginWithFacebook,
     loginWithTwitter,
